@@ -9,10 +9,14 @@ if(WIN32)
 endif(WIN32)
 
 find_package( OpenGL REQUIRED )
-find_package( GLFW3 REQUIRED )
+option(GLFW_BUILD_DOCS OFF)
+option(GLFW_BUILD_EXAMPLES OFF)
+option(GLFW_BUILD_TESTS OFF)
+add_subdirectory(extern/glfw)
 
 include_directories( "${CMAKE_SOURCE_DIR}" "${CMAKE_SOURCE_DIR}/extern" )
 
 add_executable( lines main.c extern/glad.c )
-target_link_libraries( lines glfw3 ${OPENGL_gl_LIBRARY} )
+target_link_libraries( lines glfw ${OPENGL_gl_LIBRARY} )
+target_include_directories(lines PRIVATE extern/glfw/include)
 #target_compile_options( lines PRIVATE -std=c11 -Wall )
